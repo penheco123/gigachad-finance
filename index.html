@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GigaChad Finance — $CHAD on Solana</title>
+<meta name="description" content="GigaChad Finance ($CHAD) — the most chad meme coin on Solana." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Oswald:wght@500;700&family=Nunito:wght@500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --black:#070605;
+    --ink:#120e08;
+    --panel:#1a140b;
+    --gold:#f7c948;
+    --gold-2:#ffde7a;
+    --gold-deep:#b8860b;
+    --cream:#fff4d6;
+    --muted:#c9b98f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--black);color:var(--cream);font-family:"Nunito",system-ui,sans-serif;overflow-x:hidden;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .wrap{width:min(1100px,92%);margin:0 auto}
+  .rye{font-family:"Rye",serif;font-weight:400}
+  .osw{font-family:"Oswald",sans-serif;text-transform:uppercase;letter-spacing:.12em}
+  .mono{font-family:"Space Mono",monospace}
+
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;gap:.5rem;font-family:"Oswald",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.85rem;padding:.75rem 1.3rem;border-radius:999px;border:2px solid var(--gold);color:var(--gold-2);background:transparent;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+  .btn:hover{transform:translateY(-2px);background:rgba(247,201,72,.08)}
+  .btn-gold{background:linear-gradient(180deg,var(--gold-2),var(--gold) 55%,var(--gold-deep));color:var(--black);border-color:var(--gold-2);box-shadow:0 0 24px rgba(247,201,72,.45),inset 0 -3px 0 rgba(0,0,0,.25)}
+  .btn-gold:hover{background:linear-gradient(180deg,#fff0b0,var(--gold-2) 55%,var(--gold));box-shadow:0 0 36px rgba(247,201,72,.7)}
+  .btn small{font-size:.6rem;opacity:.85}
+  .pill-dot{width:16px;height:16px;border-radius:50%;background:conic-gradient(var(--black) 0 50%,#fff 0);border:2px solid var(--black)}
+  .btn:not(.btn-gold) .pill-dot{border-color:var(--gold);background:conic-gradient(var(--gold) 0 50%,var(--black) 0)}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(7,6,5,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(247,201,72,.25)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:58px;gap:1rem}
+  .brand{display:flex;align-items:center;gap:.55rem;font-family:"Rye",serif;font-size:1.35rem;color:var(--gold-2);text-shadow:0 2px 0 var(--gold-deep)}
+  .brand img{width:32px;height:32px;border-radius:50%;border:2px solid var(--gold);box-shadow:0 0 12px rgba(247,201,72,.5)}
+  .nav-links{display:flex;gap:1.6rem;font-family:"Oswald",sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream)}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-right{display:flex;align-items:center;gap:.5rem}
+  .icon-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;color:var(--gold-2);transition:background .2s}
+  .icon-btn:hover{background:rgba(247,201,72,.15)}
+  .icon-btn svg{width:14px;height:14px}
+  .nav .btn{padding:.5rem 1rem;font-size:.72rem}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;min-height:720px;overflow:hidden;background:
+    radial-gradient(ellipse at 70% 40%,rgba(247,201,72,.28),transparent 55%),
+    radial-gradient(ellipse at 100% 100%,rgba(184,134,11,.55),transparent 50%),
+    linear-gradient(135deg,#000 0%,#1a1206 45%,#3a2a08 100%)}
+  .hero::after{content:"";position:absolute;inset:auto 0 0 0;height:160px;background:linear-gradient(transparent,var(--black))}
+  .coin{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff4b0,var(--gold) 40%,var(--gold-deep) 85%);box-shadow:inset -6px -8px 0 rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.6);display:grid;place-items:center;font-family:"Rye",serif;color:rgba(120,80,0,.55);animation:float 7s ease-in-out infinite;z-index:1}
+  .coin::before{content:"";position:absolute;inset:10%;border-radius:50%;border:3px solid rgba(255,240,180,.6)}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-22px) rotate(12deg)}}
+  .sparkle{position:absolute;color:var(--gold-2);font-size:12px;opacity:.8;animation:twinkle 3s infinite;z-index:1}
+  @keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1}}
+  .confetti{position:absolute;width:10px;height:5px;background:var(--gold);opacity:.6;z-index:1}
+  .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center;padding:5rem 0 6rem}
+  .eyebrow{display:flex;align-items:center;gap:.7rem;font-family:"Oswald",sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+  .eyebrow::before,.eyebrow::after{content:"";width:30px;height:1px;background:var(--gold)}
+  .eyebrow.center{justify-content:center}
+  .hero h1{font-family:"Rye",serif;font-weight:400;font-size:clamp(2.8rem,6.5vw,5.2rem);line-height:1;margin:.8rem 0 1rem;background:linear-gradient(180deg,#fff6cc,var(--gold) 50%,var(--gold-deep));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 0 #3b2a00) drop-shadow(0 10px 18px rgba(0,0,0,.7))}
+  .ribbon{position:relative;display:inline-block;background:var(--black);color:var(--gold-2);font-family:"Oswald",sans-serif;font-weight:700;letter-spacing:.3em;font-size:1.1rem;padding:.55rem 2.2rem;border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);clip-path:polygon(0 0,100% 0,96% 50%,100% 100%,0 100%,4% 50%)}
+  .ribbon::after{content:"";position:absolute;inset:5px 18px;border-top:1px dashed rgba(247,201,72,.5);border-bottom:1px dashed rgba(247,201,72,.5)}
+  .hero p.lead{max-width:420px;margin:1.6rem 0;font-weight:700;font-size:1.02rem;color:var(--cream)}
+  .hero p.lead b{color:var(--gold-2)}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:1.5rem}
+  .ticket{display:flex;max-width:460px;border-radius:6px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+  .ticket .stub{background:var(--gold);color:var(--black);padding:.6rem 1rem;text-align:center;position:relative;border-right:2px dashed var(--black)}
+  .ticket .stub::before{content:"";position:absolute;left:-8px;top:50%;width:16px;height:16px;border-radius:50%;background:#1a1206;transform:translateY(-50%)}
+  .ticket .stub span{display:block;font-family:"Oswald",sans-serif;font-size:.6rem;letter-spacing:.2em;font-weight:700}
+  .ticket .stub strong{font-family:"Rye",serif;font-size:1.2rem;font-weight:400}
+  .ticket .body{flex:1;background:var(--cream);color:var(--black);display:flex;align-items:center;gap:.6rem;padding:.5rem .7rem;min-width:0}
+  .ticket .body div{min-width:0;flex:1}
+  .ticket .body span{display:block;font-family:"Space Mono",monospace;font-size:.58rem;letter-spacing:.2em;color:var(--gold-deep);font-weight:700}
+  .ticket .body code{display:block;font-family:"Space Mono",monospace;font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .copy{font-family:"Oswald",sans-serif;font-weight:700;letter-spacing:.12em;font-size:.72rem;background:var(--black);color:var(--gold-2);border:0;border-radius:6px;padding:.55rem .85rem;cursor:pointer}
+  .copy:hover{background:#2a1f0a}
+  .hero-art{position:relative;transform:rotate(4deg);border:3px solid var(--gold);border-radius:22px;overflow:hidden;box-shadow:0 0 0 6px rgba(0,0,0,.6),0 0 60px rgba(247,201,72,.45),0 30px 60px rgba(0,0,0,.7)}
+  .hero-art img{aspect-ratio:1;object-fit:cover;object-position:center top;width:100%;display:block}
+
+  /* ---------- marquee ---------- */
+  .ribbons{position:relative;height:150px;background:var(--black);overflow:hidden;margin-top:-30px;z-index:3}
+  .band{position:absolute;left:-5%;width:110%;display:flex;overflow:hidden;white-space:nowrap;border-top:2px solid rgba(0,0,0,.6);border-bottom:2px solid rgba(0,0,0,.6)}
+  .band .track{display:flex;gap:2.5rem;padding:.55rem 0;animation:scroll 38s linear infinite;font-family:"Rye",serif;font-size:1.45rem}
+  .band.b1{top:30px;background:var(--black);color:var(--gold);transform:rotate(2deg);border-color:var(--gold)}
+  .band.b2{top:70px;background:var(--gold);color:var(--black);transform:rotate(-2deg)}
+  .band.b2 .track{animation-direction:reverse}
+  .track span::after{content:"★";margin-left:2.5rem;font-size:.8rem;vertical-align:middle}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ---------- section shared ---------- */
+  section{position:relative}
+  .rays{background:
+    repeating-conic-gradient(from 0deg at 50% 0%,rgba(247,201,72,.05) 0 6deg,transparent 6deg 12deg),
+    radial-gradient(ellipse at 50% 0%,#1f1708,var(--black) 70%)}
+  .sec-pad{padding:6rem 0}
+  .h2{font-family:"Rye",serif;font-weight:400;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;color:var(--cream);text-shadow:0 3px 0 var(--gold-deep),0 8px 20px rgba(0,0,0,.8)}
+  .h2 em{font-style:normal;color:var(--gold)}
+  .center{text-align:center}
+  .sub{font-family:"Nunito",sans-serif;font-weight:800;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-top:.6rem}
+  .tag{display:flex;align-items:center;gap:.6rem;font-family:"Space Mono",monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+  .tag::before{content:"";width:22px;height:2px;background:var(--gold)}
+
+  /* ---------- acts ---------- */
+  .acts{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:3rem}
+  .act{position:relative;aspect-ratio:3/4.4;border-radius:14px;overflow:hidden;border:2px solid rgba(247,201,72,.4);box-shadow:0 20px 40px rgba(0,0,0,.6);transition:transform .3s,border-color .3s}
+  .act:nth-child(1){transform:rotate(-3deg)}
+  .act:nth-child(2){transform:rotate(2deg) translateY(8px)}
+  .act:nth-child(3){transform:rotate(-1.5deg)}
+  .act:nth-child(4){transform:rotate(2.5deg) translateY(6px)}
+  .act:hover{transform:rotate(0) translateY(-8px) scale(1.03);border-color:var(--gold);z-index:2}
+  .act img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .act::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.92))}
+  .act .sprite{position:absolute;inset:0;background-image:url(./img/acts-sheet.png);background-repeat:no-repeat;background-size:423.6% auto}
+  .act .sprite.cannon{background-position:67.2% 72%}
+  .act .sprite.payout{background-position:98.6% 80%}
+  .act.full::after,.act.full .badge{display:none}
+  .act.full .txt{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .act .badge{position:absolute;top:12px;left:12px;z-index:2;font-family:"Oswald",sans-serif;font-weight:700;font-size:.6rem;letter-spacing:.2em;background:rgba(0,0,0,.75);border:1px solid var(--gold);color:var(--gold-2);padding:.2rem .6rem;border-radius:999px}
+  .act .txt{position:absolute;bottom:0;left:0;right:0;padding:1rem;z-index:2}
+  .act h3{font-family:"Rye",serif;font-weight:400;font-size:1.15rem;color:var(--gold-2);margin-bottom:.3rem}
+  .act p{font-size:.78rem;font-weight:700;color:var(--cream);opacity:.9}
+
+  /* ---------- lore ---------- */
+  .lore{background:
+    radial-gradient(ellipse at 30% 50%,rgba(247,201,72,.25),transparent 60%),
+    linear-gradient(160deg,#1c1407,#3d2b0a 50%,#120d05)}
+  .lore .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:3.5rem;align-items:center}
+  .frame{position:relative;padding:14px;border-radius:16px;background:#0c0904;border:2px solid var(--gold);transform:rotate(-2deg);box-shadow:0 0 50px rgba(247,201,72,.3)}
+  .frame::before{content:"";position:absolute;inset:4px;border-radius:12px;background:radial-gradient(circle,var(--gold-2) 0 2.5px,transparent 3px) 0 0/26px 26px;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:6px;filter:drop-shadow(0 0 4px var(--gold))}
+  .frame img{border-radius:8px;aspect-ratio:3/4;object-fit:cover;width:100%;position:relative}
+  .frame .ribbon{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%) rotate(2deg);white-space:nowrap;font-size:.95rem;background:var(--gold);color:var(--black);border-color:var(--black)}
+  .frame .ribbon::after{border-color:rgba(0,0,0,.4)}
+  .lore .h2{font-size:clamp(2rem,4.2vw,3.1rem)}
+  .lore .h2 em{color:var(--gold-2)}
+  .timeline{display:grid;gap:.9rem;margin-top:1.5rem}
+  .step{display:grid;grid-template-columns:80px 1fr;gap:.5rem;padding:1rem 1.2rem;border-radius:12px;background:rgba(10,7,3,.82);border:1px solid rgba(247,201,72,.15)}
+  .step .num{font-family:"Rye",serif;font-size:1.3rem;color:var(--gold)}
+  .step h4{font-family:"Oswald",sans-serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.9rem;color:var(--cream)}
+  .step p{font-size:.8rem;font-weight:700;color:var(--muted)}
+  .step.now{background:linear-gradient(135deg,var(--gold),var(--gold-deep));border-color:var(--gold-2)}
+  .step.now .num,.step.now h4,.step.now p{color:var(--black)}
+  .quote{margin-top:1.4rem;padding:1rem 1.4rem;border-left:3px solid var(--gold);background:linear-gradient(90deg,rgba(0,0,0,.4),transparent)}
+  .quote p{font-family:"Rye",serif;font-size:1.25rem;color:var(--cream)}
+  .quote cite{display:block;margin-top:.5rem;font-family:"Space Mono",monospace;font-style:normal;font-size:.62rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+
+  /* ---------- gallery ---------- */
+  .gallery{background:radial-gradient(ellipse at 10% 40%,#1b150b,var(--black) 60%)}
+  .grid8{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.5rem}
+  .tile{position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;border:1px solid rgba(247,201,72,.25);box-shadow:0 14px 30px rgba(0,0,0,.6);transition:transform .3s}
+  .tile:nth-child(odd){transform:rotate(-2deg)}
+  .tile:nth-child(even){transform:rotate(1.5deg)}
+  .tile:hover{transform:rotate(0) scale(1.05);z-index:2;border-color:var(--gold)}
+  .tile img{width:100%;height:100%;object-fit:cover}
+  .tile .lbl{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.75);color:var(--cream);font-family:"Space Mono",monospace;font-size:.6rem;padding:.2rem .55rem;border-radius:999px}
+  .tile .lbl::before{content:"●";color:var(--gold);margin-right:.25rem}
+  .tile .cap{position:absolute;top:10px;left:0;right:0;text-align:center;font-family:"Oswald",sans-serif;font-weight:700;font-size:1rem;letter-spacing:.04em;color:var(--gold-2);text-shadow:0 2px 6px #000,0 0 10px rgba(247,201,72,.6)}
+
+  /* ---------- tokenomics ---------- */
+  .tok .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:3.5rem;align-items:center}
+  .medal{position:relative;width:min(340px,80vw);aspect-ratio:1;margin:0 auto;border-radius:50%;padding:12px;background:var(--black);border:4px solid var(--gold);box-shadow:0 0 0 10px rgba(247,201,72,.08),0 0 80px rgba(247,201,72,.4)}
+  .medal::before{content:"";position:absolute;inset:-22px;border-radius:50%;border:1px dashed rgba(247,201,72,.5)}
+  .medal .inner{width:100%;height:100%;border-radius:50%;background:radial-gradient(circle at 50% 30%,#2a1e08,#0a0703);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;border:3px solid var(--gold-2)}
+  .medal img{width:44%;border-radius:50%;border:3px solid var(--gold);box-shadow:0 0 20px rgba(247,201,72,.6)}
+  .medal strong{font-family:"Oswald",sans-serif;font-size:2.6rem;letter-spacing:.06em;color:var(--gold-2);line-height:1}
+  .medal span{font-family:"Nunito",sans-serif;font-weight:800;color:var(--cream);font-size:.95rem}
+  .tok .h2 em{display:block}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1.6rem}
+  .stat{background:var(--panel);border:1px solid rgba(247,201,72,.18);border-radius:12px;padding:1rem;min-height:92px}
+  .stat span{font-family:"Space Mono",monospace;font-size:.6rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+  .stat strong{display:block;font-family:"Rye",serif;font-weight:400;font-size:1.25rem;color:var(--cream);margin-top:.3rem;line-height:1.2}
+  .ca{display:flex;align-items:center;gap:.8rem;margin-top:1rem;background:var(--panel);border:1px solid rgba(247,201,72,.18);border-radius:12px;padding:.55rem .55rem .55rem 1rem;max-width:440px}
+  .ca span{font-family:"Space Mono",monospace;font-size:.65rem;color:var(--gold);font-weight:700}
+  .ca code{flex:1;min-width:0;font-family:"Space Mono",monospace;font-size:.74rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ca .copy{background:var(--gold);color:var(--black)}
+  .note{font-family:"Space Mono",monospace;font-size:.65rem;color:var(--muted);margin-top:.6rem}
+
+  /* ---------- join ---------- */
+  .join .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:3.5rem;align-items:center}
+  .join-img{transform:rotate(-4deg);border-radius:6px;overflow:hidden;border:2px solid var(--gold);box-shadow:0 0 50px rgba(247,201,72,.3),0 25px 50px rgba(0,0,0,.7)}
+  .join-img img{aspect-ratio:1;object-fit:cover;width:100%}
+  .join p{color:var(--muted);font-weight:700;max-width:420px;margin:1rem 0 1.4rem}
+  .row{display:flex;flex-wrap:wrap;gap:.7rem}
+
+  /* ---------- rules ---------- */
+  .rules{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.5rem}
+  .rule{text-align:center;padding:1.6rem 1.2rem;border-radius:16px;border:1px solid rgba(247,201,72,.35);background:repeating-conic-gradient(from 0deg at 50% 0%,rgba(247,201,72,.06) 0 8deg,transparent 8deg 16deg),linear-gradient(#17110a,#0b0804)}
+  .rule .chip{display:inline-block;background:var(--gold);color:var(--black);font-family:"Space Mono",monospace;font-weight:700;font-size:.6rem;letter-spacing:.18em;padding:.15rem .6rem;border-radius:6px}
+  .rule h3{font-family:"Rye",serif;font-weight:400;font-size:1.5rem;margin:.5rem 0 .3rem;color:var(--cream)}
+  .rule p{font-size:.82rem;font-weight:700;color:var(--muted)}
+  .rule b{color:var(--gold-2)}
+
+  /* ---------- steps ---------- */
+  .buy{background:
+    radial-gradient(ellipse at 50% 0%,rgba(247,201,72,.3),transparent 60%),
+    linear-gradient(180deg,#2b1f07,#0a0703)}
+  .buy .h2{color:var(--gold-2)}
+  .buy-sub{font-weight:800;color:var(--cream);margin-top:.6rem}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2.5rem 0}
+  .card{padding:1.2rem;border-radius:12px;background:rgba(10,7,3,.75);border:1px solid rgba(247,201,72,.45);min-height:160px}
+  .card .n{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,var(--gold-2),var(--gold-deep));color:var(--black);font-family:"Rye",serif;font-size:1.1rem;border:2px solid var(--cream);margin-bottom:1rem}
+  .card h4{font-family:"Oswald",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.9rem;color:var(--gold-2)}
+  .card p{font-size:.8rem;font-weight:700;color:var(--cream);opacity:.85;margin-top:.3rem}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--black);padding-top:1.8rem}
+  .socials{display:flex;justify-content:center;gap:.6rem}
+  .sbtn{display:inline-flex;align-items:center;gap:.4rem;border:1.5px solid var(--cream);border-radius:999px;padding:.35rem .9rem;font-size:.72rem;font-weight:800}
+  .sbtn:hover{border-color:var(--gold);color:var(--gold)}
+  .sbtn svg{width:11px;height:11px}
+  .strip{margin:1.8rem 0 0;background:#14100a;transform:rotate(-1deg);overflow:hidden;white-space:nowrap;border-top:1px solid rgba(247,201,72,.3);border-bottom:1px solid rgba(247,201,72,.3)}
+  .strip .track{display:inline-flex;gap:2rem;padding:.6rem 0;animation:scroll 30s linear infinite;font-family:"Nunito",sans-serif;font-weight:800;text-transform:uppercase;font-size:.85rem;color:var(--cream)}
+  .strip .track span::after{content:"✦";margin-left:2rem;color:var(--gold)}
+  .foot{border-top:1px solid rgba(247,201,72,.2);margin-top:1.8rem;padding:2rem 0 2.4rem}
+  .foot-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+  .foot-links{display:flex;align-items:center;gap:1.2rem;font-family:"Oswald",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase}
+  .foot-links svg{width:12px;height:12px}
+  .foot-links a:hover{color:var(--gold)}
+  .disc{font-size:.68rem;color:var(--muted);margin-top:1.2rem;max-width:900px}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    .nav-links{display:none}
+    .hero .wrap,.lore .wrap,.tok .wrap,.join .wrap{grid-template-columns:1fr}
+    .hero-art{max-width:420px;margin:0 auto}
+    .acts,.grid8,.steps{grid-template-columns:repeat(2,1fr)}
+    .rules{grid-template-columns:1fr}
+    .frame{max-width:380px;margin:0 auto}
+    .join-img{max-width:360px;margin:0 auto}
+  }
+  @media (max-width:520px){
+    .nav .btn{display:none}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .steps{grid-template-columns:1fr}
+    .band .track{font-size:1.1rem}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="brand"><img src="./img/logo.png" alt="" />$CHAD</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#show">The Show</a>
+      <a href="#lore">The Lore</a>
+      <a href="#rules">House Rules</a>
+      <a href="#tickets">Tickets</a>
+    </nav>
+    <div class="nav-right">
+      <a class="icon-btn" href="#" data-link="x" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-1.2 18h1.9L7.4 3.9H5.4L17.7 20z"/></svg></a>
+      <a class="icon-btn" href="#" data-link="telegram" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.5c-.2 1-.9 1.3-1.7.8l-4.8-3.6-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2 1.8 11.7c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.3z"/></svg></a>
+      <a class="icon-btn" href="#" data-link="chart" target="_blank" rel="noopener noreferrer" aria-label="Chart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></a>
+      <a class="btn btn-gold" href="#tickets"><span class="pill-dot"></span>Buy $CHAD <small>on pump.fun</small></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="coin" style="width:120px;height:120px;left:8%;top:60px;font-size:1.6rem">CHAD</div>
+    <div class="coin" style="width:80px;height:95px;left:4%;top:50px;animation-delay:-2s"></div>
+    <div class="coin" style="width:110px;height:110px;left:22%;top:140px;animation-delay:-4s"></div>
+    <div class="coin" style="width:75px;height:75px;left:16%;bottom:40px;animation-delay:-1s;font-size:1rem">CHAD</div>
+    <div class="coin" style="width:70px;height:70px;left:30%;top:-30px;animation-delay:-3s"></div>
+    <div class="coin" style="width:90px;height:90px;left:52%;top:-40px;animation-delay:-5s"></div>
+    <span class="sparkle" style="left:38%;top:140px">✦</span>
+    <span class="sparkle" style="left:9%;top:540px;animation-delay:-1s">✦</span>
+    <span class="sparkle" style="left:40%;top:620px;animation-delay:-2s">✦</span>
+    <span class="sparkle" style="left:60%;top:420px;animation-delay:-.5s">✦</span>
+    <span class="confetti" style="left:52%;top:200px;transform:rotate(30deg)"></span>
+    <span class="confetti" style="left:63%;top:650px;transform:rotate(-20deg)"></span>
+    <span class="confetti" style="left:43%;top:690px;transform:rotate(60deg)"></span>
+    <span class="confetti" style="left:94%;top:260px;transform:rotate(10deg)"></span>
+
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">★ Ladies &amp; Gentlemen · Apes &amp; Chads ★</div>
+        <h1 id="hero-title">MEME GigaChad Finance</h1>
+        <div class="ribbon">$CHAD · SOLANA</div>
+        <p class="lead">The most chad GigaChad Finance on Solana. <b>$CHAD</b> is the greatest show on <b>Solana</b> — step right up.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-gold" href="#tickets"><span class="pill-dot"></span>Get your ticket <small>on pump.fun</small></a>
+          <a class="btn" href="#" data-link="chart" target="_blank" rel="noopener noreferrer">View chart</a>
+          <a class="btn" href="#" data-link="x" target="_blank" rel="noopener noreferrer">Follow</a>
+        </div>
+        <div class="ticket">
+          <div class="stub"><span>ADMIT</span><strong>ONE</strong></div>
+          <div class="body">
+            <div><span>CONTRACT ADDRESS</span><code class="ca-text">1313131131313131</code></div>
+            <button class="copy" type="button">COPY</button>
+          </div>
+        </div>
+      </div>
+      <figure class="hero-art"><img src="./img/hero-king.jpg" alt="GigaChad em preto e branco sem camisa, sentado em um trono de pedra usando uma coroa dourada" /></figure>
+    </div>
+  </section>
+
+  <!-- RIBBONS -->
+  <div class="ribbons" aria-hidden="true">
+    <div class="band b1"><div class="track">
+      <span>Step Right Up</span><span>$CHAD on Solana</span><span>Diamond Hands Only</span><span>Admit One</span><span>Jawline Certified</span><span>Never Sell</span>
+      <span>Step Right Up</span><span>$CHAD on Solana</span><span>Diamond Hands Only</span><span>Admit One</span><span>Jawline Certified</span><span>Never Sell</span>
+    </div></div>
+    <div class="band b2"><div class="track">
+      <span>Power to the Holders</span><span>Hold Your Seat</span><span>The Show Never Closes</span><span>$CHAD</span><span>Greatest Show on Solana</span><span>Chads Only</span>
+      <span>Power to the Holders</span><span>Hold Your Seat</span><span>The Show Never Closes</span><span>$CHAD</span><span>Greatest Show on Solana</span><span>Chads Only</span>
+    </div></div>
+  </div>
+
+  <!-- ACTS -->
+  <section id="show" class="rays sec-pad" aria-labelledby="acts-title">
+    <div class="wrap center">
+      <div class="eyebrow center">★ Tonight&apos;s Programme ★</div>
+      <h2 id="acts-title" class="h2" style="margin-top:.6rem">Four Acts. <em>Zero Sellers.</em></h2>
+      <p class="sub">The chart has a main character.</p>
+      <div class="acts">
+        <article class="act"><img src="./img/act1.png" alt="" /><span class="badge">ACT I</span><div class="txt"><h3>The Ring of Fire</h3><p>The chart caught fire and GigaChad jumped straight through it while everyone watched.</p></div></article>
+        <article class="act"><img src="./img/act2.png" alt="" /><span class="badge">ACT II</span><div class="txt"><h3>The High Wire</h3><p>Paper hands pulled the net. The chads walked the wire anyway and never looked down.</p></div></article>
+        <article class="act full"><span class="sprite cannon" role="img" aria-label="GigaChad saindo de um canhão dourado escrito $CHAD"></span><span class="badge">ACT III</span><div class="txt"><h3>The Cannonball</h3><p>$CHAD launched on Solana — the loudest entrance the big top has ever heard.</p></div></article>
+        <article class="act full"><span class="sprite payout" role="img" aria-label="GigaChad de smoking dourado sentado em um trono cercado de moedas"></span><span class="badge">FINALE</span><div class="txt"><h3>The Payout</h3><p>Supply 1B, tax 0/0, liquidity burned. The show pays you to stay seated.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- LORE -->
+  <section id="lore" class="lore sec-pad" aria-labelledby="lore-title">
+    <div class="wrap">
+      <figure class="frame">
+<img src="./img/lore-king.png" alt="GigaChad com coroa e capa real de pele flexionando os braços entre moedas de ouro" />
+<figcaption class="ribbon">THE KING OF FINANCE</figcaption>
+      </figure>
+      <div>
+        <div class="eyebrow">★ The Lore ★</div>
+        <h2 id="lore-title" class="h2" style="margin-top:.5rem">GigaChad Runs the Ring. <em>The Holders Run the Show.</em></h2>
+        <div class="timeline">
+          <div class="step"><span class="num">I</span><div><h4>The Tent Goes Up</h4><p>THE CHART HAS A MAIN CHARACTER.</p></div></div>
+          <div class="step"><span class="num">II</span><div><h4>The Crowd Arrives</h4><p>Word spreads across Solana. Every seat in the big top starts to fill.</p></div></div>
+          <div class="step"><span class="num">III</span><div><h4>The Encore</h4><p>One post, one chart, one jawline — $CHAD lights up like it never left.</p></div></div>
+          <div class="step now"><span class="num">NOW</span><div><h4>$CHAD on Solana</h4><p>The most chad GigaChad Finance on Solana. Hold it and you&apos;re in the show.</p></div></div>
+        </div>
+        <blockquote class="quote">
+          <p>&ldquo;Everybody came for the tent. They stayed for GigaChad.&rdquo;</p>
+          <cite>— Overheard in the cheap seats</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery sec-pad" aria-labelledby="gal-title">
+    <div class="wrap">
+      <div class="tag">The Sideshow</div>
+      <h2 id="gal-title" class="h2">Meme <em>Gallery</em></h2>
+      <div class="grid8">
+        <figure class="tile"><img src="./img/hero.png" alt="GigaChad meme 1" /><span class="cap">MAIN CHARACTER</span><span class="lbl">01 act i</span></figure>
+        <figure class="tile"><img src="./img/g2.png" alt="GigaChad meme 2" /><span class="cap">BUY THE DIP $CHAD</span><span class="lbl">02 act ii</span></figure>
+        <figure class="tile"><img src="./img/act2.png" alt="GigaChad meme 3" /><span class="cap">RIDE $CHAD</span><span class="lbl">03 act iii</span></figure>
+        <figure class="tile"><img src="./img/g1.png" alt="GigaChad meme 4" /><span class="cap">$CHAD IN SPACE</span><span class="lbl">04 finale</span></figure>
+        <figure class="tile"><img src="./img/g4.png" alt="GigaChad meme 5" /><span class="cap">JACKPOT $CHAD</span><span class="lbl">05 encore</span></figure>
+        <figure class="tile"><img src="./img/act1.png" alt="GigaChad meme 6" /><span class="cap">ENCORE $CHAD</span><span class="lbl">06 the ring</span></figure>
+        <figure class="tile"><img src="./img/act4.png" alt="GigaChad meme 7" /><span class="cap">THRONE $CHAD</span><span class="lbl">07 the crowd</span></figure>
+        <figure class="tile"><img src="./img/g3.png" alt="GigaChad meme 8" /><span class="cap">LFG $CHAD</span><span class="lbl">08 the payout</span></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOKENOMICS -->
+  <section class="tok sec-pad" aria-labelledby="tok-title">
+    <div class="wrap">
+      <div class="medal">
+        <div class="inner">
+          <img src="./img/logo.png" alt="" />
+          <strong>$CHAD</strong>
+          <span>GigaChad Finance</span>
+        </div>
+      </div>
+      <div>
+        <div class="tag">The Box Office</div>
+        <h2 id="tok-title" class="h2">Ticket <em>Numbers</em></h2>
+        <div class="stats">
+          <div class="stat"><span>Name</span><strong>GigaChad Finance</strong></div>
+          <div class="stat"><span>Ticker</span><strong>$CHAD</strong></div>
+          <div class="stat"><span>Chain</span><strong>Solana</strong></div>
+          <div class="stat"><span>Supply</span><strong>1B</strong></div>
+          <div class="stat"><span>Tax</span><strong>0/0</strong></div>
+          <div class="stat"><span>LP</span><strong>Burned</strong></div>
+        </div>
+        <div class="ca">
+          <span>CA</span>
+<code class="ca-text">131331313131313131131</code>
+          <button class="copy" type="button">COPY</button>
+        </div>
+        <p class="note">Only trust the CA posted here and on official $CHAD channels.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOIN -->
+  <section class="join sec-pad" aria-labelledby="join-title">
+    <div class="wrap">
+      <figure class="join-img"><img src="./img/seat.png" alt="GigaChad flexionando os bíceps com coroa dourada" /></figure>
+      <div>
+        <div class="tag">Join the Crowd</div>
+        <h2 id="join-title" class="h2">Take Your <em>Seat</em></h2>
+        <p>Join the GigaChad Finance community. Buy $CHAD. Make memes. Never sell.</p>
+        <div class="row">
+          <a class="btn" href="#" data-link="x" target="_blank" rel="noopener noreferrer">X</a>
+          <a class="btn" href="#" data-link="telegram" target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a class="btn btn-gold" href="#tickets"><span class="pill-dot"></span>Buy $CHAD <small>on pump.fun</small></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RULES -->
+  <section id="rules" class="rays sec-pad" aria-labelledby="rules-title">
+    <div class="wrap center">
+      <div class="eyebrow center">★ House Rules ★</div>
+      <h2 id="rules-title" class="h2" style="margin-top:.6rem">How the <em>Big Top</em> Works</h2>
+      <div class="rules">
+        <div class="rule"><span class="chip">RULE 01</span><h3>The Ticket</h3><p><b>$CHAD</b> lives on <b>Solana</b>. Total supply <b>1B</b>.</p></div>
+        <div class="rule"><span class="chip">RULE 02</span><h3>The House Cut</h3><p>Buy / sell tax: <b>0/0</b>. No hidden acts, no trapdoors.</p></div>
+        <div class="rule"><span class="chip">RULE 03</span><h3>The Safety Net</h3><p>Liquidity: <b>Burned</b>. The net stays up for the whole show.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUY -->
+  <section id="tickets" class="buy sec-pad" aria-labelledby="buy-title">
+    <div class="wrap center">
+      <div class="eyebrow center">★ Box Office Open ★</div>
+      <h2 id="buy-title" class="h2" style="margin-top:.5rem">Get Your Ticket</h2>
+      <p class="buy-sub">Four steps from the parking lot to the front row.</p>
+      <div class="steps" style="text-align:left">
+        <div class="card"><div class="n">1</div><h4>Get a Wallet</h4><p>Any wallet that speaks Solana.</p></div>
+        <div class="card"><div class="n">2</div><h4>Load Up</h4><p>Buy the native Solana coin on an exchange and send it to your wallet.</p></div>
+        <div class="card"><div class="n">3</div><h4>Swap for $CHAD</h4><p>Hit the button below, or paste the contract address.</p></div>
+        <div class="card"><div class="n">4</div><h4>Hold Your Seat</h4><p>The show never closes. Diamond hands get the front row.</p></div>
+      </div>
+      <div class="row" style="justify-content:center">
+        <a class="btn btn-gold" href="#" data-link="buy" target="_blank" rel="noopener noreferrer" style="font-size:.95rem;padding:.9rem 1.6rem"><span class="pill-dot"></span>Buy $CHAD <small>on pump.fun</small></a>
+        <a class="btn" href="#" data-link="x" target="_blank" rel="noopener noreferrer" style="font-size:.95rem;padding:.9rem 1.6rem">Follow on X</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="socials">
+    <a class="sbtn" href="#" data-link="x" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2z"/></svg>X</a>
+    <a class="sbtn" href="#" data-link="telegram" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.5c-.2 1-.9 1.3-1.7.8l-4.8-3.6-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2 1.8 11.7c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.3z"/></svg>Telegram</a>
+  </div>
+  <div class="strip" aria-hidden="true"><div class="track">
+    <span>GigaChad Finance</span><span>$CHAD</span><span>GigaChad Finance</span><span>$CHAD</span><span>GigaChad Finance</span><span>$CHAD</span><span>GigaChad Finance</span><span>$CHAD</span>
+    <span>GigaChad Finance</span><span>$CHAD</span><span>GigaChad Finance</span><span>$CHAD</span><span>GigaChad Finance</span><span>$CHAD</span><span>GigaChad Finance</span><span>$CHAD</span>
+  </div></div>
+  <div class="foot">
+    <div class="wrap">
+      <div class="foot-top">
+        <a href="#top" class="brand"><img src="./img/logo.png" alt="" />$CHAD</a>
+        <nav class="foot-links" aria-label="Footer">
+          <a href="#show">The Show</a><a href="#lore">The Lore</a><a href="#tickets">Tickets</a>
+          <a href="#" data-link="x" target="_blank" rel="noopener noreferrer" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2z"/></svg></a>
+          <a href="#" data-link="telegram" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.5c-.2 1-.9 1.3-1.7.8l-4.8-3.6-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2 1.8 11.7c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.3z"/></svg></a>
+          <a href="#" data-link="chart" target="_blank" rel="noopener noreferrer" aria-label="Chart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></a>
+        </nav>
+      </div>
+      <p class="disc">GigaChad Finance ($CHAD) is a meme coin on Solana with no intrinsic value or expectation of financial return. Crypto is volatile — never put in more than you can afford to lose. Nothing here is financial advice.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.parentElement.querySelector('.ca-text').textContent;
+      if (navigator.clipboard) navigator.clipboard.writeText(text).catch(function () {});
+      btn.textContent = 'COPIED!';
+      setTimeout(function () { btn.textContent = 'COPY'; }, 1500);
+    });
+  });
+</script>
+<script>
+  const LINKS = {
+    x: "https://x.com/GigaChad2030",
+    telegram: "https://t.me/+WkBuahpCsqJmODkx",
+    chart: "https://dexscreener.com/solana/SEU_CA",
+    buy: "https://pump.fun/coin/SEU_CA"
+  };
+  document.querySelectorAll("[data-link]").forEach(a => { const u = LINKS[a.dataset.link]; if (u) a.href = u; });
+</script>
+</body>
+</html>
