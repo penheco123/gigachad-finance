@@ -1,0 +1,11 @@
+; Zone file for gigachad.com.br
+; Generated on 2026-11-06 09:00:12 UTC
+
+$ORIGIN gigachad.com.br
+$TTL 3600
+
+@                              3600 IN SOA   nova.dns-parking.com. dns.hostinger.com. 2026110601 10000 2400 604800 600
+@                              50 IN A     2.57.91.91
+@                              86400 IN NS    cosmos.dns-parking.com.
+                               86400 IN NS    nova.dns-parking.com.
+www                            300 IN CNAME gigachad.com.br.
